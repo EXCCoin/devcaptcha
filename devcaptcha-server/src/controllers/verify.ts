@@ -8,13 +8,24 @@ import {
   redisClient
 } from '../server';
 
-function distance2d(x, positionX: number, y, positionY: number) {
+function distance2d(x: number, positionX: number, y: number, positionY: number): number {
   return Math.sqrt(Math.pow(x - positionX, 2) + Math.pow(y - positionY, 2));
+}
+
+interface CaptchaAnswer {
+  challenge: string;
+  prefix: string;
+}
+
+interface CaptchaResponse {
+  x: number;
+  y: number;
+  answers: CaptchaAnswer[];
 }
 
 export default async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const {response} = req.body;
+    const {response} = req.body as { response: CaptchaResponse };
     const {apiKey} = req.query;
 
     if (!(apiKey && response)) {
@@ -47,9 +58,9 @@ export default async (req: Request, res: Response, next: NextFunction) => {
       return res.sendStatus(400);
     }
 
-    const answerChallenges = answers.map(answer => {
+    const answerChallenges = answers.map((answer: CaptchaAnswer) => {
       return answer.challenge;
-    })
+    });
 
     for (const challenge of challenges) {
       if (answerChallenges.indexOf(challenge) < 0) {

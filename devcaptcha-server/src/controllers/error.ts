@@ -1,4 +1,6 @@
-export default (err, req, res, next) => {
+import { Request, Response, NextFunction, ErrorRequestHandler } from 'express';
+
+const errorHandler: ErrorRequestHandler = (err: Error, req: Request, res: Response, next: NextFunction) => {
   if (res.headersSent) {
     return next(err);
   }
@@ -7,3 +9,5 @@ export default (err, req, res, next) => {
     res.sendStatus(500);
   }
 }
+
+export default errorHandler;

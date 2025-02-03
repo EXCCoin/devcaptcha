@@ -2,7 +2,9 @@ module.exports = {
   mode: "development",
   devtool: "source-map",
   devServer: {
-    contentBase: './public',
+    static: {
+      directory: './public',
+    },
     compress: false,
     port: 8080,
   },

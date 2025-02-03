@@ -26,7 +26,6 @@ export default class Puzzle {
         blend: 'in'
       }])
 
-
     if (config.outputFormat === ImageFormat.PNG) {
       return await puzzle.png({
         quality: config.outputQuality
@@ -36,5 +35,7 @@ export default class Puzzle {
         quality: config.outputQuality
       }).toBuffer();
     }
+
+    throw new Error('Unsupported output format');
   }
 }

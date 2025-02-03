@@ -32,5 +32,8 @@ export default class Background {
         quality: config.outputQuality
       }).toBuffer();
     }
+    
+    // Add default return to handle all cases
+    throw new Error('Unsupported output format');
   }
 }
